@@ -1,0 +1,558 @@
+var _user$project$Utilities$endRound = function (mod) {
+	return _elm_lang$core$Native_Utils.update(
+		mod,
+		{
+			missiles: {ctor: '[]'},
+			remMissiles: A3(_elm_lang$core$Basics$clamp, 10, 20, 10 + ((mod.round / 2) | 0)),
+			mSpeed: _user$project$Variables$baseMSpeed + A3(
+				_elm_lang$core$Basics$clamp,
+				0.1,
+				1,
+				_elm_lang$core$Basics$toFloat(mod.round) * 0.1),
+			silos: A3(
+				_user$project$Models$genSilos,
+				_user$project$Variables$innerW,
+				_user$project$Variables$baseY + _elm_lang$core$Basics$toFloat(_user$project$Variables$groundH),
+				_user$project$Variables$maxSiloMs),
+			blasts: {ctor: '[]'},
+			round: mod.round + 1,
+			rOver: false
+		});
+};
+var _user$project$Utilities$roundIsOver = function (mod) {
+	var func = F2(
+		function (o, acc) {
+			return o.alive ? (o.alive || acc) : acc;
+		});
+	return _elm_lang$core$Native_Utils.eq(mod.remMissiles, 0) ? ((!A3(_elm_lang$core$List$foldl, func, false, mod.missiles)) && (!A3(_elm_lang$core$List$foldl, func, false, mod.blasts))) : false;
+};
+var _user$project$Utilities$gameIsOver = function (mod) {
+	var func = F2(
+		function (x, acc) {
+			return x.alive || acc;
+		});
+	return !A3(_elm_lang$core$List$foldl, func, false, mod.cities);
+};
+var _user$project$Utilities$growBlasts = F3(
+	function (rate, maxR, bs) {
+		var func = F2(
+			function (b, acc) {
+				if (b.alive) {
+					var fR = b.rad + rate;
+					return (_elm_lang$core$Native_Utils.cmp(fR, maxR) > -1) ? {
+						ctor: '::',
+						_0: _elm_lang$core$Native_Utils.update(
+							b,
+							{rad: maxR, alive: false}),
+						_1: acc
+					} : {
+						ctor: '::',
+						_0: _elm_lang$core$Native_Utils.update(
+							b,
+							{rad: fR}),
+						_1: acc
+					};
+				} else {
+					if (_elm_lang$core$Native_Utils.eq(b.rad, 0)) {
+						return {ctor: '::', _0: b, _1: acc};
+					} else {
+						var fR = b.rad - rate;
+						return (_elm_lang$core$Native_Utils.cmp(fR, 0) > -1) ? {
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.update(
+								b,
+								{rad: fR}),
+							_1: acc
+						} : {
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.update(
+								b,
+								{rad: 0}),
+							_1: acc
+						};
+					}
+				}
+			});
+		return A3(
+			_elm_lang$core$List$foldl,
+			func,
+			{ctor: '[]'},
+			bs);
+	});
+var _user$project$Utilities$removeM = F2(
+	function (m, ms) {
+		var _p0 = ms;
+		if (_p0.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			var _p2 = _p0._0;
+			var _p1 = _p0._1;
+			return _elm_lang$core$Native_Utils.eq(_p2, m) ? _p1 : {
+				ctor: '::',
+				_0: _p2,
+				_1: A2(_user$project$Utilities$removeM, m, _p1)
+			};
+		}
+	});
+var _user$project$Utilities$incomingM = function (m) {
+	incomingM:
+	while (true) {
+		if (_elm_lang$core$Native_Utils.eq(m.remMissiles, 0)) {
+			return m;
+		} else {
+			var _p3 = m.seed;
+			if (_p3.ctor === 'Nothing') {
+				return _elm_lang$core$Native_Utils.crashCase(
+					'Utilities',
+					{
+						start: {line: 102, column: 9},
+						end: {line: 128, column: 30}
+					},
+					_p3)('incomingM: Impossible');
+			} else {
+				var _p8 = _p3._0;
+				var base = -1 * (_user$project$Variables$innerW / 2);
+				var wSpace = _user$project$Variables$innerW / 8;
+				var _p5 = A2(
+					_elm_lang$core$Random$step,
+					A2(_elm_lang$core$Random$int, 0, 8),
+					_p8);
+				var locVal = _p5._0;
+				var cSeed = _p5._1;
+				var _p6 = A2(
+					_elm_lang$core$Random$step,
+					A2(_elm_lang$core$Random$float, _user$project$Variables$baseX, _user$project$Variables$maxX),
+					_p8);
+				var srcX = _p6._0;
+				var bSeed = _p6._1;
+				var _p7 = A2(
+					_elm_lang$core$Random$step,
+					A2(_elm_lang$core$Random$int, 0, _user$project$Variables$maxRand),
+					_p8);
+				var rVal = _p7._0;
+				var aSeed = _p7._1;
+				if (_elm_lang$core$Native_Utils.cmp(rVal, 100 - m.remMissiles) > 0) {
+					return _elm_lang$core$Native_Utils.update(
+						m,
+						{
+							seed: _elm_lang$core$Maybe$Just(bSeed)
+						});
+				} else {
+					var missile = A3(
+						_user$project$Models$newM,
+						{x: srcX, y: _user$project$Variables$maxY},
+						{x: srcX, y: _user$project$Variables$maxY},
+						{
+							x: base + (wSpace * _elm_lang$core$Basics$toFloat(locVal)),
+							y: _elm_lang$core$Basics$toFloat(_user$project$Variables$groundH) + _user$project$Variables$baseY
+						});
+					var _v2 = _elm_lang$core$Native_Utils.update(
+						m,
+						{
+							remMissiles: m.remMissiles - 1,
+							missiles: {ctor: '::', _0: missile, _1: m.missiles},
+							seed: _elm_lang$core$Maybe$Just(bSeed)
+						});
+					m = _v2;
+					continue incomingM;
+				}
+			}
+		}
+	}
+};
+var _user$project$Utilities$isDefM = function (_p9) {
+	var _p10 = _p9;
+	return _elm_lang$core$Native_Utils.cmp(_p10.src.y, _p10.pos.y) < 0;
+};
+var _user$project$Utilities$isDead = function (m) {
+	return _elm_lang$core$Native_Utils.eq(m.dest, m.pos);
+};
+var _user$project$Utilities$replaceLoc = F2(
+	function (ls, o) {
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return _elm_lang$core$Native_Utils.eq(o.pos, x.pos) ? {ctor: '::', _0: o, _1: acc} : {ctor: '::', _0: x, _1: acc};
+				}),
+			{ctor: '[]'},
+			ls);
+	});
+var _user$project$Utilities$replaceSilo = F2(
+	function (ls, s) {
+		return A2(_user$project$Utilities$replaceLoc, ls, s);
+	});
+var _user$project$Utilities$replaceCity = F2(
+	function (ls, c) {
+		return A2(_user$project$Utilities$replaceLoc, ls, c);
+	});
+var _user$project$Utilities$jsPosConvert = function (_p11) {
+	var _p12 = _p11;
+	return {
+		x: _p12.x - (_elm_lang$core$Basics$toFloat(_user$project$Variables$winW) / 2),
+		y: _p12.y - (_elm_lang$core$Basics$toFloat(_user$project$Variables$winH) / 2)
+	};
+};
+var _user$project$Utilities$distanceBTW = F2(
+	function (p1, p2) {
+		return _elm_lang$core$Basics$sqrt(
+			Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2));
+	});
+var _user$project$Utilities$killLoc = F2(
+	function (ls, b) {
+		var _p13 = ls;
+		if (_p13.ctor === '[]') {
+			return {ctor: '[]'};
+		} else {
+			var _p15 = _p13._0;
+			var _p14 = _p13._1;
+			return (_elm_lang$core$Native_Utils.cmp(
+				A2(_user$project$Utilities$distanceBTW, b.pos, _p15.pos),
+				b.rad) < 0) ? {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.update(
+					_p15,
+					{alive: false}),
+				_1: _p14
+			} : {
+				ctor: '::',
+				_0: _p15,
+				_1: A2(_user$project$Utilities$killLoc, _p14, b)
+			};
+		}
+	});
+var _user$project$Utilities$blastCollateral = function (mod) {
+	var fCity = F2(
+		function (b, acc) {
+			return b.alive ? A2(_user$project$Utilities$killLoc, mod.cities, b) : acc;
+		});
+	var fSilo = F2(
+		function (b, acc) {
+			return b.alive ? A2(_user$project$Utilities$killLoc, mod.silos, b) : acc;
+		});
+	return _elm_lang$core$Native_Utils.update(
+		mod,
+		{
+			silos: A3(_elm_lang$core$List$foldl, fSilo, mod.silos, mod.blasts),
+			cities: A3(_elm_lang$core$List$foldl, fCity, mod.cities, mod.blasts)
+		});
+};
+var _user$project$Utilities$moveM = F2(
+	function (d, m) {
+		var len = A2(_user$project$Utilities$distanceBTW, m.pos, m.dest);
+		var vec = {x: m.dest.x - m.pos.x, y: m.dest.y - m.pos.y};
+		if (_elm_lang$core$Native_Utils.cmp(len, d) > 0) {
+			var wUnitV = {x: (vec.x / len) * d, y: (vec.y / len) * d};
+			return _elm_lang$core$Native_Utils.update(
+				m,
+				{
+					pos: {x: m.pos.x + wUnitV.x, y: m.pos.y + wUnitV.y}
+				});
+		} else {
+			return _elm_lang$core$Native_Utils.update(
+				m,
+				{pos: m.dest});
+		}
+	});
+var _user$project$Utilities$moveMs = F3(
+	function (aD, dD, ms) {
+		var func = F2(
+			function (m, acc) {
+				if (_elm_lang$core$Native_Utils.eq(m.pos, m.dest)) {
+					return {ctor: '::', _0: m, _1: acc};
+				} else {
+					var _p16 = _user$project$Utilities$isDefM(m);
+					if (_p16 === true) {
+						return {
+							ctor: '::',
+							_0: A2(_user$project$Utilities$moveM, dD, m),
+							_1: acc
+						};
+					} else {
+						return {
+							ctor: '::',
+							_0: A2(_user$project$Utilities$moveM, aD, m),
+							_1: acc
+						};
+					}
+				}
+			});
+		return A3(
+			_elm_lang$core$List$foldl,
+			func,
+			{ctor: '[]'},
+			ms);
+	});
+var _user$project$Utilities$handleTick = F3(
+	function (aD, dD, mod) {
+		var func = F2(
+			function (m, _p17) {
+				var _p18 = _p17;
+				var _p21 = _p18._1;
+				var _p20 = _p18._0;
+				if (_elm_lang$core$Native_Utils.eq(m.pos, m.dest)) {
+					return m.alive ? {
+						ctor: '_Tuple2',
+						_0: {
+							ctor: '::',
+							_0: _elm_lang$core$Native_Utils.update(
+								m,
+								{alive: false}),
+							_1: _p20
+						},
+						_1: {
+							ctor: '::',
+							_0: _user$project$Models$newB(m.pos),
+							_1: _p21
+						}
+					} : {
+						ctor: '_Tuple2',
+						_0: {ctor: '::', _0: m, _1: _p20},
+						_1: _p21
+					};
+				} else {
+					var _p19 = _user$project$Utilities$isDefM(m);
+					if (_p19 === true) {
+						return {
+							ctor: '_Tuple2',
+							_0: {
+								ctor: '::',
+								_0: A2(_user$project$Utilities$moveM, dD, m),
+								_1: _p20
+							},
+							_1: _p21
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: {
+								ctor: '::',
+								_0: A2(_user$project$Utilities$moveM, aD, m),
+								_1: _p20
+							},
+							_1: _p21
+						};
+					}
+				}
+			});
+		return A3(
+			_elm_lang$core$List$foldl,
+			func,
+			{
+				ctor: '_Tuple2',
+				_0: {ctor: '[]'},
+				_1: {ctor: '[]'}
+			},
+			mod.missiles);
+	});
+var _user$project$Utilities$genMs = F3(
+	function (mod, n, m) {
+		genMs:
+		while (true) {
+			if (_elm_lang$core$Native_Utils.cmp(n, 0) < 1) {
+				return mod;
+			} else {
+				var _p22 = mod.seed;
+				if (_p22.ctor === 'Nothing') {
+					return _elm_lang$core$Native_Utils.crashCase(
+						'Utilities',
+						{
+							start: {line: 189, column: 9},
+							end: {line: 215, column: 30}
+						},
+						_p22)('genMs: Impossible');
+				} else {
+					var base = -1 * (_user$project$Variables$innerW / 2);
+					var wSpace = _user$project$Variables$innerW / 8;
+					var _p24 = A2(
+						_elm_lang$core$Random$step,
+						A2(_elm_lang$core$Random$int, 0, 8),
+						_p22._0);
+					var locVal = _p24._0;
+					var cSeed = _p24._1;
+					var missile = A3(
+						_user$project$Models$newM,
+						m.pos,
+						m.pos,
+						{
+							x: base + (wSpace * _elm_lang$core$Basics$toFloat(locVal)),
+							y: _elm_lang$core$Basics$toFloat(_user$project$Variables$groundH) + _user$project$Variables$baseY
+						});
+					if (_elm_lang$core$Native_Utils.cmp(
+						A2(_user$project$Utilities$distanceBTW, missile.dest, m.dest),
+						1) < 0) {
+						var _v10 = _elm_lang$core$Native_Utils.update(
+							mod,
+							{
+								seed: _elm_lang$core$Maybe$Just(cSeed)
+							}),
+							_v11 = n,
+							_v12 = m;
+						mod = _v10;
+						n = _v11;
+						m = _v12;
+						continue genMs;
+					} else {
+						var _v13 = _elm_lang$core$Native_Utils.update(
+							mod,
+							{
+								missiles: {ctor: '::', _0: missile, _1: mod.missiles},
+								remMissiles: mod.remMissiles - 1,
+								seed: _elm_lang$core$Maybe$Just(cSeed)
+							}),
+							_v14 = n - 1,
+							_v15 = m;
+						mod = _v13;
+						n = _v14;
+						m = _v15;
+						continue genMs;
+					}
+				}
+			}
+		}
+	});
+var _user$project$Utilities$handleSplits = function (mod) {
+	var func = F2(
+		function (m, md) {
+			if (!m.alive) {
+				return md;
+			} else {
+				if ((_elm_lang$core$Native_Utils.cmp(md.remMissiles, 0) < 1) || _user$project$Utilities$isDefM(m)) {
+					return _elm_lang$core$Native_Utils.update(
+						md,
+						{
+							missiles: {ctor: '::', _0: m, _1: md.missiles}
+						});
+				} else {
+					if (_elm_lang$core$Native_Utils.cmp(m.pos.y, 0) < 0) {
+						return _elm_lang$core$Native_Utils.update(
+							md,
+							{
+								missiles: {ctor: '::', _0: m, _1: md.missiles}
+							});
+					} else {
+						var _p25 = md.seed;
+						if (_p25.ctor === 'Nothing') {
+							return _elm_lang$core$Native_Utils.crashCase(
+								'Utilities',
+								{
+									start: {line: 150, column: 21},
+									end: {line: 180, column: 42}
+								},
+								_p25)('handleSplits: Impossible');
+						} else {
+							var _p28 = _p25._0;
+							var _p27 = A2(
+								_elm_lang$core$Random$step,
+								A2(_elm_lang$core$Random$int, 0, _user$project$Variables$maxSplitRand),
+								_p28);
+							var rVal = _p27._0;
+							var aSeed = _p27._1;
+							var num_gen = A3(
+								_elm_lang$core$Basics$clamp,
+								1,
+								5,
+								A2(
+									_elm_lang$core$Basics_ops['%'],
+									rVal,
+									A3(_elm_lang$core$Basics$clamp, 1, md.remMissiles, 5)));
+							return (_elm_lang$core$Native_Utils.cmp(
+								rVal,
+								5 + A3(_elm_lang$core$Basics$clamp, 0, 50, md.round)) < 0) ? A3(
+								_user$project$Utilities$genMs,
+								_elm_lang$core$Native_Utils.update(
+									md,
+									{
+										seed: _elm_lang$core$Maybe$Just(_p28),
+										missiles: {ctor: '::', _0: m, _1: md.missiles}
+									}),
+								num_gen,
+								m) : _elm_lang$core$Native_Utils.update(
+								md,
+								{
+									missiles: {ctor: '::', _0: m, _1: md.missiles},
+									seed: _elm_lang$core$Maybe$Just(_p28)
+								});
+						}
+					}
+				}
+			}
+		});
+	return A3(
+		_elm_lang$core$List$foldl,
+		func,
+		_elm_lang$core$Native_Utils.update(
+			mod,
+			{
+				missiles: {ctor: '[]'}
+			}),
+		mod.missiles);
+};
+var _user$project$Utilities$findNearestSilo = F2(
+	function (ls, pos) {
+		var func = F2(
+			function (s, acc) {
+				return (_elm_lang$core$Native_Utils.cmp(
+					A2(_user$project$Utilities$distanceBTW, s.pos, pos),
+					A2(_user$project$Utilities$distanceBTW, acc.pos, pos)) < 0) ? s : acc;
+			});
+		var _p29 = ls;
+		if (_p29.ctor === '[]') {
+			return _elm_lang$core$Native_Utils.crashCase(
+				'Utilities',
+				{
+					start: {line: 257, column: 9},
+					end: {line: 259, column: 46}
+				},
+				_p29)('findNearestSilo: Impossible');
+		} else {
+			return A3(_elm_lang$core$List$foldl, func, _p29._0, _p29._1);
+		}
+	});
+var _user$project$Utilities$nearestASilo = F2(
+	function (ls, pos) {
+		var create = F2(
+			function (s, acc) {
+				return (s.alive && (_elm_lang$core$Native_Utils.cmp(s.numMissiles, 0) > 0)) ? {ctor: '::', _0: s, _1: acc} : acc;
+			});
+		var func = F2(
+			function (s, acc) {
+				return (_elm_lang$core$Native_Utils.cmp(
+					A2(_user$project$Utilities$distanceBTW, s.pos, pos),
+					A2(_user$project$Utilities$distanceBTW, acc.pos, pos)) < 0) ? s : acc;
+			});
+		var _p31 = A3(
+			_elm_lang$core$List$foldl,
+			create,
+			{ctor: '[]'},
+			ls);
+		if (_p31.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			return _elm_lang$core$Maybe$Just(
+				A3(_elm_lang$core$List$foldl, func, _p31._0, _p31._1));
+		}
+	});
+var _user$project$Utilities$handleBlast = F2(
+	function (b, mod) {
+		var handleBlast_ = F2(
+			function (m, acc) {
+				return (_user$project$Utilities$isDead(m) || _user$project$Utilities$isDefM(m)) ? acc : ((_elm_lang$core$Native_Utils.cmp(
+					A2(_user$project$Utilities$distanceBTW, m.pos, b.pos),
+					b.rad) < 1) ? _elm_lang$core$Native_Utils.update(
+					acc,
+					{
+						missiles: A2(_user$project$Utilities$removeM, m, acc.missiles),
+						blasts: {
+							ctor: '::',
+							_0: _user$project$Models$newB(m.pos),
+							_1: acc.blasts
+						},
+						score: acc.score + _user$project$Variables$ppM
+					}) : acc);
+			});
+		return b.alive ? A3(_elm_lang$core$List$foldl, handleBlast_, mod, mod.missiles) : mod;
+	});
+var _user$project$Utilities$handleBlasts = function (mod) {
+	return A3(_elm_lang$core$List$foldl, _user$project$Utilities$handleBlast, mod, mod.blasts);
+};

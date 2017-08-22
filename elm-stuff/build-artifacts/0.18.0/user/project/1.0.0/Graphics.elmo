@@ -1,0 +1,568 @@
+var _user$project$Graphics$renderInstructions = F2(
+	function (w, h) {
+		var instructions = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$gocH,
+						_evancz$elm_graphics$Text$fromString('CLICK TO START / SHOOT')))));
+		var title = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$goH,
+						_evancz$elm_graphics$Text$fromString('MISSILE DEFENSE')))));
+		var instForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * -0.5},
+			_evancz$elm_graphics$Collage$text(instructions));
+		var titleForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * 0.5},
+			_evancz$elm_graphics$Collage$text(title));
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			{
+				ctor: '::',
+				_0: titleForm,
+				_1: {
+					ctor: '::',
+					_0: instForm,
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Graphics$renderRoundOver = F2(
+	function (w, h) {
+		var iText = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$gocH,
+						_evancz$elm_graphics$Text$fromString('CLICK SCREEN TO CONTINUE')))));
+		var rcText = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$goH,
+						_evancz$elm_graphics$Text$fromString('ROUND COMPLETE')))));
+		var iForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * -0.5},
+			_evancz$elm_graphics$Collage$text(iText));
+		var rcForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * 0.5},
+			_evancz$elm_graphics$Collage$text(rcText));
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			{
+				ctor: '::',
+				_0: rcForm,
+				_1: {
+					ctor: '::',
+					_0: iForm,
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Graphics$renderGameOver = F2(
+	function (w, h) {
+		var iText = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$gocH,
+						_evancz$elm_graphics$Text$fromString('CLICK SCREEN TO RESTART')))));
+		var goText = _evancz$elm_graphics$Text$bold(
+			A2(
+				_evancz$elm_graphics$Text$typeface,
+				{
+					ctor: '::',
+					_0: 'Courier New',
+					_1: {
+						ctor: '::',
+						_0: 'Courier',
+						_1: {
+							ctor: '::',
+							_0: 'sans-serif',
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				A2(
+					_evancz$elm_graphics$Text$color,
+					_elm_lang$core$Color$green,
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$goH,
+						_evancz$elm_graphics$Text$fromString('GAME OVER')))));
+		var iForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * -0.5},
+			_evancz$elm_graphics$Collage$text(iText));
+		var goForm = A2(
+			_evancz$elm_graphics$Collage$move,
+			{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$goH * 0.5},
+			_evancz$elm_graphics$Collage$text(goText));
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			{
+				ctor: '::',
+				_0: goForm,
+				_1: {
+					ctor: '::',
+					_0: iForm,
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Graphics$renderBlasts = F3(
+	function (w, h, bs) {
+		var func = F2(
+			function (b, acc) {
+				return _elm_lang$core$Native_Utils.eq(b.rad, 0) ? acc : {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: b.pos.x, _1: b.pos.y},
+						A2(
+							_evancz$elm_graphics$Collage$filled,
+							_elm_lang$core$Color$white,
+							_evancz$elm_graphics$Collage$circle(b.rad))),
+					_1: acc
+				};
+			});
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			A3(
+				_elm_lang$core$List$foldl,
+				func,
+				{ctor: '[]'},
+				bs));
+	});
+var _user$project$Graphics$formMissile = F3(
+	function (sColor, mColor, _p0) {
+		var _p1 = _p0;
+		var _p3 = _p1.src;
+		var _p2 = _p1.pos;
+		var lStyle = {
+			color: sColor,
+			width: _user$project$Variables$sWidth,
+			cap: _evancz$elm_graphics$Collage$Flat,
+			join: _evancz$elm_graphics$Collage$Smooth,
+			dashing: {ctor: '[]'},
+			dashOffset: 0
+		};
+		return _evancz$elm_graphics$Collage$group(
+			{
+				ctor: '::',
+				_0: A2(
+					_evancz$elm_graphics$Collage$traced,
+					lStyle,
+					A2(
+						_evancz$elm_graphics$Collage$segment,
+						{ctor: '_Tuple2', _0: _p3.x, _1: _p3.y},
+						{ctor: '_Tuple2', _0: _p2.x, _1: _p2.y})),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _p2.x, _1: _p2.y},
+						A2(
+							_evancz$elm_graphics$Collage$filled,
+							mColor,
+							_evancz$elm_graphics$Collage$circle(_user$project$Variables$mRad))),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Graphics$renderMissiles = F3(
+	function (w, h, ms) {
+		var func = F2(
+			function (m, acc) {
+				return _user$project$Utilities$isDead(m) ? acc : (_user$project$Utilities$isDefM(m) ? {
+					ctor: '::',
+					_0: A3(_user$project$Graphics$formMissile, _elm_lang$core$Color$green, _elm_lang$core$Color$white, m),
+					_1: acc
+				} : {
+					ctor: '::',
+					_0: A3(_user$project$Graphics$formMissile, _elm_lang$core$Color$red, _elm_lang$core$Color$white, m),
+					_1: acc
+				});
+			});
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			A3(
+				_elm_lang$core$List$foldl,
+				func,
+				{ctor: '[]'},
+				ms));
+	});
+var _user$project$Graphics$renderRoundScore = F5(
+	function (w, h, c, round, score) {
+		var rndForm = _evancz$elm_graphics$Collage$text(
+			_evancz$elm_graphics$Text$bold(
+				A2(
+					_evancz$elm_graphics$Text$typeface,
+					{
+						ctor: '::',
+						_0: 'Courier New',
+						_1: {
+							ctor: '::',
+							_0: 'Courier',
+							_1: {
+								ctor: '::',
+								_0: 'sans-serif',
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$scoreH,
+						A2(
+							_evancz$elm_graphics$Text$color,
+							c,
+							_evancz$elm_graphics$Text$fromString(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'ROUND: ',
+									_elm_lang$core$Basics$toString(round))))))));
+		var scoForm = _evancz$elm_graphics$Collage$text(
+			_evancz$elm_graphics$Text$bold(
+				A2(
+					_evancz$elm_graphics$Text$typeface,
+					{
+						ctor: '::',
+						_0: 'Courier New',
+						_1: {
+							ctor: '::',
+							_0: 'Courier',
+							_1: {
+								ctor: '::',
+								_0: 'sans-serif',
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					A2(
+						_evancz$elm_graphics$Text$height,
+						_user$project$Variables$scoreH,
+						A2(
+							_evancz$elm_graphics$Text$color,
+							c,
+							_evancz$elm_graphics$Text$fromString(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'SCORE: ',
+									_elm_lang$core$Basics$toString(score))))))));
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			{
+				ctor: '::',
+				_0: A2(
+					_evancz$elm_graphics$Collage$move,
+					{ctor: '_Tuple2', _0: _user$project$Variables$scoreY * 0.4, _1: _user$project$Variables$scoreY},
+					scoForm),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _user$project$Variables$scoreY * -0.4, _1: _user$project$Variables$scoreY},
+						rndForm),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Graphics$renderScore = F4(
+	function (w, h, c, score) {
+		var txtForm = _evancz$elm_graphics$Collage$text(
+			A2(
+				_evancz$elm_graphics$Text$height,
+				_user$project$Variables$scoreH,
+				A2(
+					_evancz$elm_graphics$Text$color,
+					c,
+					_evancz$elm_graphics$Text$fromString(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'Score: ',
+							_elm_lang$core$Basics$toString(score))))));
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			{
+				ctor: '::',
+				_0: A2(
+					_evancz$elm_graphics$Collage$move,
+					{ctor: '_Tuple2', _0: 0, _1: _user$project$Variables$scoreY},
+					txtForm),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Graphics$renderSilos = F5(
+	function (w, h, aCol, dCol, silos) {
+		var sDForm = _evancz$elm_graphics$Collage$toForm(
+			A3(_evancz$elm_graphics$Element$image, _user$project$Variables$sSize, _user$project$Variables$sSize, 'assets/silodead.png'));
+		var sAForm = _evancz$elm_graphics$Collage$toForm(
+			A3(_evancz$elm_graphics$Element$image, _user$project$Variables$sSize, _user$project$Variables$sSize, 'assets/silo.png'));
+		var sToForm = F2(
+			function (_p4, acc) {
+				var _p5 = _p4;
+				var _p6 = _p5.pos;
+				var score = A2(
+					_evancz$elm_graphics$Collage$move,
+					{ctor: '_Tuple2', _0: _p6.x, _1: _p6.y - 20},
+					_evancz$elm_graphics$Collage$text(
+						A2(
+							_evancz$elm_graphics$Text$color,
+							_elm_lang$core$Color$white,
+							_evancz$elm_graphics$Text$fromString(
+								_elm_lang$core$Basics$toString(_p5.numMissiles)))));
+				return _p5.alive ? {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _p6.x, _1: _p6.y},
+						sAForm),
+					_1: {ctor: '::', _0: score, _1: acc}
+				} : {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _p6.x, _1: _p6.y},
+						sDForm),
+					_1: acc
+				};
+			});
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			A3(
+				_elm_lang$core$List$foldl,
+				sToForm,
+				{ctor: '[]'},
+				silos));
+	});
+var _user$project$Graphics$renderCities = F5(
+	function (w, h, aCol, dCol, cities) {
+		var cDForm = _evancz$elm_graphics$Collage$toForm(
+			A3(_evancz$elm_graphics$Element$image, _user$project$Variables$cSize, _user$project$Variables$cSize, 'assets/citydead.png'));
+		var cAForm = _evancz$elm_graphics$Collage$toForm(
+			A3(_evancz$elm_graphics$Element$image, _user$project$Variables$cSize, _user$project$Variables$cSize, 'assets/city.png'));
+		var cToForm = F2(
+			function (_p7, acc) {
+				var _p8 = _p7;
+				var _p9 = _p8.pos;
+				return _p8.alive ? {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _p9.x, _1: _p9.y},
+						cAForm),
+					_1: acc
+				} : {
+					ctor: '::',
+					_0: A2(
+						_evancz$elm_graphics$Collage$move,
+						{ctor: '_Tuple2', _0: _p9.x, _1: _p9.y},
+						cDForm),
+					_1: acc
+				};
+			});
+		return A3(
+			_evancz$elm_graphics$Collage$collage,
+			w,
+			h,
+			A3(
+				_elm_lang$core$List$foldl,
+				cToForm,
+				{ctor: '[]'},
+				cities));
+	});
+var _user$project$Graphics$renderGround = F3(
+	function (w, h, c) {
+		return A2(
+			_evancz$elm_graphics$Element$color,
+			c,
+			A3(_evancz$elm_graphics$Element$size, w, h, _evancz$elm_graphics$Element$empty));
+	});
+var _user$project$Graphics$renderBG = F2(
+	function (w, h) {
+		return A3(_evancz$elm_graphics$Element$image, w, h, 'assets/bg.png');
+	});
+var _user$project$Graphics$renderScreen = F3(
+	function (w, h, c) {
+		return A2(
+			_evancz$elm_graphics$Element$color,
+			c,
+			A3(_evancz$elm_graphics$Element$size, w, h, _evancz$elm_graphics$Element$empty));
+	});
+var _user$project$Graphics$renderWindow = function (model) {
+	return model.instructions ? _evancz$elm_graphics$Element$layers(
+		{
+			ctor: '::',
+			_0: A3(_user$project$Graphics$renderScreen, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$black),
+			_1: {
+				ctor: '::',
+				_0: A2(_user$project$Graphics$renderInstructions, _user$project$Variables$winW, _user$project$Variables$winH),
+				_1: {ctor: '[]'}
+			}
+		}) : (model.gOver ? _evancz$elm_graphics$Element$layers(
+		{
+			ctor: '::',
+			_0: A3(_user$project$Graphics$renderScreen, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$black),
+			_1: {
+				ctor: '::',
+				_0: A5(_user$project$Graphics$renderRoundScore, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$green, model.round, model.score),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Graphics$renderGameOver, _user$project$Variables$winW, _user$project$Variables$winH),
+					_1: {ctor: '[]'}
+				}
+			}
+		}) : (model.rOver ? _evancz$elm_graphics$Element$layers(
+		{
+			ctor: '::',
+			_0: A3(_user$project$Graphics$renderScreen, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$black),
+			_1: {
+				ctor: '::',
+				_0: A5(_user$project$Graphics$renderRoundScore, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$green, model.round, model.score),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Graphics$renderRoundOver, _user$project$Variables$winW, _user$project$Variables$winH),
+					_1: {ctor: '[]'}
+				}
+			}
+		}) : _evancz$elm_graphics$Element$layers(
+		{
+			ctor: '::',
+			_0: A4(
+				_evancz$elm_graphics$Element$container,
+				_user$project$Variables$winW,
+				_user$project$Variables$winH,
+				_evancz$elm_graphics$Element$bottomLeft,
+				A2(_user$project$Graphics$renderBG, _user$project$Variables$winW, _user$project$Variables$winH)),
+			_1: {
+				ctor: '::',
+				_0: A5(_user$project$Graphics$renderCities, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$blue, _elm_lang$core$Color$red, model.cities),
+				_1: {
+					ctor: '::',
+					_0: A5(_user$project$Graphics$renderSilos, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$yellow, _elm_lang$core$Color$red, model.silos),
+					_1: {
+						ctor: '::',
+						_0: A3(_user$project$Graphics$renderMissiles, _user$project$Variables$winW, _user$project$Variables$winH, model.missiles),
+						_1: {
+							ctor: '::',
+							_0: A3(_user$project$Graphics$renderBlasts, _user$project$Variables$winW, _user$project$Variables$winH, model.blasts),
+							_1: {
+								ctor: '::',
+								_0: A5(_user$project$Graphics$renderRoundScore, _user$project$Variables$winW, _user$project$Variables$winH, _elm_lang$core$Color$green, model.round, model.score),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}
+			}
+		})));
+};

@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="assets/md.css">
+  </head>
+  <body>
+    <div id="main"></div>
+    <script src="MissileDefense.js"></script>
+    <script>
+      var node = document.getElementById('main');
+      var app = Elm.MissileDefense.embed(node);
+
+      function toRelClickPos(aPos) {
+        var screen = document.getElementById("mdScreen").getBoundingClientRect();
+        var result = {x : aPos.x - screen.left, y : screen.bottom - aPos.y};
+
+        if ((result.x <= 550) && (result.x >= 0) && (result.y <= 550) && (result.y >= 85)) {
+          return result;
+        }
+        else
+          return null;
+      };
+      
+      app.ports.reqRelClickPos.subscribe(function(aPos) {
+        var result = toRelClickPos(aPos);
+        app.ports.recRelClickPos.send(result);
+      });
+    </script>
+  </body>
+</html>

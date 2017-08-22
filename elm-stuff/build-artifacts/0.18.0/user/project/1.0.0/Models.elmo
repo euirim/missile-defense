@@ -1,0 +1,158 @@
+var _user$project$Models$newB = function (p) {
+	return {pos: p, alive: true, rad: 0};
+};
+var _user$project$Models$newM = F3(
+	function (src, pos, dest) {
+		return {src: src, pos: pos, dest: dest, alive: true};
+	});
+var _user$project$Models$newCity = F2(
+	function (pos, alive) {
+		return {pos: pos, alive: alive};
+	});
+var _user$project$Models$newSilo = F3(
+	function (pos, nm, alive) {
+		return {pos: pos, numMissiles: nm, alive: alive};
+	});
+var _user$project$Models$newPos = F2(
+	function (x, y) {
+		return {x: x, y: y};
+	});
+var _user$project$Models$genSilos = F3(
+	function (w, y, nm) {
+		var partW = w / 8;
+		var base = -1 * (w / 2);
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return {
+						ctor: '::',
+						_0: A3(
+							_user$project$Models$newSilo,
+							A2(_user$project$Models$newPos, base + (partW * x), y),
+							nm,
+							true),
+						_1: acc
+					};
+				}),
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: 0,
+				_1: {
+					ctor: '::',
+					_0: 4,
+					_1: {
+						ctor: '::',
+						_0: 8,
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _user$project$Models$genCities = F2(
+	function (w, y) {
+		var partW = w / 8;
+		var base = -1 * (w / 2);
+		return A3(
+			_elm_lang$core$List$foldl,
+			F2(
+				function (x, acc) {
+					return {
+						ctor: '::',
+						_0: A2(
+							_user$project$Models$newCity,
+							A2(_user$project$Models$newPos, base + (partW * x), y),
+							true),
+						_1: acc
+					};
+				}),
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: 1,
+				_1: {
+					ctor: '::',
+					_0: 2,
+					_1: {
+						ctor: '::',
+						_0: 3,
+						_1: {
+							ctor: '::',
+							_0: 5,
+							_1: {
+								ctor: '::',
+								_0: 6,
+								_1: {
+									ctor: '::',
+									_0: 7,
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			});
+	});
+var _user$project$Models$genInitialModel = F3(
+	function (w, y, nm) {
+		return {
+			silos: A3(_user$project$Models$genSilos, w, y, nm),
+			cities: A2(_user$project$Models$genCities, w, y),
+			missiles: {ctor: '[]'},
+			blasts: {ctor: '[]'},
+			remMissiles: 10,
+			mSpeed: _user$project$Variables$baseMSpeed,
+			round: 1,
+			score: 0,
+			seed: _elm_lang$core$Maybe$Nothing,
+			gOver: false,
+			rOver: false,
+			instructions: true
+		};
+	});
+var _user$project$Models$Position = F2(
+	function (a, b) {
+		return {x: a, y: b};
+	});
+var _user$project$Models$Silo = F3(
+	function (a, b, c) {
+		return {pos: a, numMissiles: b, alive: c};
+	});
+var _user$project$Models$City = F2(
+	function (a, b) {
+		return {pos: a, alive: b};
+	});
+var _user$project$Models$Missile = F4(
+	function (a, b, c, d) {
+		return {src: a, pos: b, dest: c, alive: d};
+	});
+var _user$project$Models$Blast = F3(
+	function (a, b, c) {
+		return {pos: a, rad: b, alive: c};
+	});
+var _user$project$Models$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return {silos: a, cities: b, missiles: c, blasts: d, remMissiles: e, mSpeed: f, round: g, score: h, seed: i, gOver: j, rOver: k, instructions: l};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
